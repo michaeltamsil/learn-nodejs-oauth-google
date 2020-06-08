@@ -1,3 +1,4 @@
+
 var cors = require('cors')
 var createError = require('http-errors');
 var express = require('express');
@@ -8,9 +9,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+require('dotenv').config({
+  path: path.resolve(__dirname, './.env')
+});
 
-session = {}
-
+var app = express()
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -21,8 +24,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
-  cookie: {},
+
   resave: false,
   saveUninitialized: false,
   secret: process.env.SESSION_SECRET
